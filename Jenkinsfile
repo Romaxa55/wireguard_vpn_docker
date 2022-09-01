@@ -25,7 +25,8 @@ node ("slave") {
     }
   } finally {
     stage('cleanup') {
-      echo "doing some cleanup..."
+        sh "docker-compose down || true"
     }
+
   }
 }
