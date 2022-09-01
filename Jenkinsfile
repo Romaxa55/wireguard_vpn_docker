@@ -1,54 +1,23 @@
-pipeline {
-    agent { node { label 'slave' } }
+#!groovy
+#!/usr/bin/env groovy
 
-    environment {
-        TEST_PREFIX = "test-IMAGE"
-        TEST_IMAGE = "${env.TEST_PREFIX}:${env.BUILD_NUMBER}"
-        TEST_CONTAINER = "${env.TEST_PREFIX}-${env.BUILD_NUMBER}"
-        REGISTRY_ADDRESS = "my.registry.address.com"
+node('slave') {
 
-
-        COMPOSE_FILE = "docker-compose.yml"
-        STACK_PREFIX = "my-project-stack-name"
+    stage('Get code from SCM') {
+        checkout(
+                [$class: 'GitSCM', branches: [[name: '*/#your-dev-branch#']],
+                 doGenerateSubmoduleConfigurations: false,
+                 extensions: [],
+                 submoduleCfg: [],
+                 userRemoteConfigs: [[url: '#your-git-link#']]]
+        )
     }
 
-    stages {
-
-        stage("Build and start image") {
-            steps {
-                sh "docker-compose build"
-                sh "docker-compose up -d"
-            }
-        }
-
-        stage("Run tests") {
-            steps {
-                try {
-                  timeout(1000, unit: SECONDS) {
-                    sh "docker wait wireguard"
-                  }
-                } catch(e) {
-                  sh "docker stop wireguard"
-                  sh "docker wait wireguard" // <= 10s, container is guaranteed to be stopped
-                }
-                sh "docker rm wireguard"
-            }
-
-        }
-
+    stage('Composer Install') {
+        sh 'composer install'
     }
 
-    post {
-      always {
-          sh "docker-compose down || true"
-      }
-
-      success {
-            echo 'I succeeded!'
-      }
-
-      failure {
-            echo 'I failed :('
-      }
+    stage("PHPLint") {
+        sh 'find app -name "*.php" -print0 | xargs -0 -n1 php -l'
     }
 }
