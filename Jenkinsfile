@@ -24,8 +24,8 @@ pipeline {
 
         stage("Run tests") {
             steps {
-                sh "docker-compose exec -T php-fpm composer --no-ansi --no-interaction tests-ci"
-                sh "docker-compose exec -T php-fpm composer --no-ansi --no-interaction behat-ci"
+                sh "docker ps"
+                sh "docker logs"
             }
 
         }
