@@ -18,11 +18,6 @@ pipeline {
     }
 
     stages {
-        stage("Prepare") {
-            steps {
-                githubNotify status: "PENDING"
-            }
-        }
 
         stage("Build and start test image") {
             steps {
