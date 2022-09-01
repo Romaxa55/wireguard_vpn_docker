@@ -9,6 +9,8 @@ node ("slave") {
     stage('compile') {
       sh "docker-compose build"
       sh "docker-compose up -d"
+      sh "docker-compose ps"
+
     }
     stage('test') {
       try {
