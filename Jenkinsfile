@@ -15,7 +15,7 @@ node ("slave") {
     stage('test') {
         while( true ) {
             sh "docker-compose logs wireguard"
-
+            }
         }
   } finally {
     stage('cleanup') {
