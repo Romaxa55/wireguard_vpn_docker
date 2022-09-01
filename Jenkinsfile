@@ -13,15 +13,10 @@ node ("slave") {
 
     }
     stage('test') {
-      try {
-        timeout(1000, unit: SECONDS) {
-          sh "chmod +x ./scripts/check.sh"
-          sh "./scripts/check.sh"
+        while( true ) {
+            sh "docker-compose logs wireguard"
+
         }
-      } catch(e) {
-        print(e)
-      }
-    }
   } finally {
     stage('cleanup') {
         sh "docker-compose down || true"
