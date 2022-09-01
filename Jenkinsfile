@@ -1,4 +1,4 @@
-node {
+node ("slave") {
   try {
     stage('checkout') {
       checkout scm
@@ -7,16 +7,19 @@ node {
       sh "git clean -fdx"
     }
     stage('compile') {
-      echo "nothing to compile for hello.sh..."
+      sh "docker-compose build"
+      sh "docker-compose up -d"
     }
     stage('test') {
-      sh "./test_hello.sh"
-    }
-    stage('package') {
-      sh "tar -cvzf hello.tar.gz hello.sh"
-    }
-    stage('publish') {
-      echo "uploading package..."
+      try {
+        timeout(1000, unit: SECONDS) {
+          sh "docker wait wireguard"
+        }
+      } catch(e) {
+        sh "docker stop wireguard"
+        sh "docker wait wireguard" // <= 10s, container is guaranteed to be stopped
+      }
+      sh "docker rm wireguard"
     }
   } finally {
     stage('cleanup') {
