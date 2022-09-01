@@ -12,7 +12,6 @@ node ("slave") {
       sh "docker-compose ps"
 
     }
-    stage('test') {
 
   } finally {
     stage('cleanup') {
