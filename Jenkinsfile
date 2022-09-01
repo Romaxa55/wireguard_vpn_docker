@@ -9,7 +9,6 @@ pipeline {
 
 
         COMPOSE_FILE = "docker-compose.yml"
-        REGISTRY_AUTH = credentials("dickerLogin")
         STACK_PREFIX = "my-project-stack-name"
     }
 
@@ -24,8 +23,15 @@ pipeline {
 
         stage("Run tests") {
             steps {
-                sh "docker ps"
-                sh "docker logs wireguard"
+                try {
+                  timeout(1000, unit: SECONDS) {
+                    sh "docker wait wireguard"
+                  }
+                } catch(e) {
+                  sh "docker stop wireguard"
+                  sh "docker wait wireguard" // <= 10s, container is guaranteed to be stopped
+                }
+                sh "docker rm wireguard"
             }
 
         }
