@@ -15,31 +15,10 @@ pipeline {
 
     stages {
 
-        stage("Build and start test image") {
+        stage("Build and start image") {
             steps {
                 sh "docker-compose build"
                 sh "docker-compose up -d"
-                sh """
-                    docker run --rm \
-                      --name=wireguard-test \
-                      --cap-add=NET_ADMIN \
-                      --cap-add=SYS_MODULE \
-                      -e PUID=1000 \
-                      -e PGID=1000 \
-                      -e TZ=Europe/London \
-                      -e SERVERURL=wireguard.domain.com `#optional` \
-                      -e SERVERPORT=51820 `#optional` \
-                      -e PEERS=1 `#optional` \
-                      -e PEERDNS=auto `#optional` \
-                      -e INTERNAL_SUBNET=1.1.10.0 `#optional` \
-                      -e ALLOWEDIPS=0.0.0.0/0 `#optional` \
-                      -e LOG_CONFS=true `#optional` \
-                      -p 51821:51820/udp \
-                      -v /path/to/appdata/config:/config \
-                      -v /lib/modules:/lib/modules \
-                      --sysctl="net.ipv4.conf.all.src_valid_mark=1" \
-                      linuxserver/wireguard
-                """
             }
         }
 
