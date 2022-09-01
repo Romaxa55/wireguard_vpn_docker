@@ -20,7 +20,7 @@ pipeline {
     stages {
         stage("Prepare") {
             steps {
-                bitbucketStatusNotify buildState: "INPROGRESS"
+                githubNotify status: "PENDING"
             }
         }
 
