@@ -1,23 +1,26 @@
-#!groovy
-#!/usr/bin/env groovy
-
-node('slave') {
-
-    stage('Get code from SCM') {
-        checkout(
-                [$class: 'GitSCM', branches: [[name: '*/#your-dev-branch#']],
-                 doGenerateSubmoduleConfigurations: false,
-                 extensions: [],
-                 submoduleCfg: [],
-                 userRemoteConfigs: [[url: '#your-git-link#']]]
-        )
+node {
+  try {
+    stage('checkout') {
+      checkout scm
     }
-
-    stage('Composer Install') {
-        sh 'composer install'
+    stage('prepare') {
+      sh "git clean -fdx"
     }
-
-    stage("PHPLint") {
-        sh 'find app -name "*.php" -print0 | xargs -0 -n1 php -l'
+    stage('compile') {
+      echo "nothing to compile for hello.sh..."
     }
+    stage('test') {
+      sh "./test_hello.sh"
+    }
+    stage('package') {
+      sh "tar -cvzf hello.tar.gz hello.sh"
+    }
+    stage('publish') {
+      echo "uploading package..."
+    }
+  } finally {
+    stage('cleanup') {
+      echo "doing some cleanup..."
+    }
+  }
 }
