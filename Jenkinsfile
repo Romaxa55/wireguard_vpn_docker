@@ -38,7 +38,6 @@ pipeline {
                       -v /path/to/appdata/config:/config \
                       -v /lib/modules:/lib/modules \
                       --sysctl="net.ipv4.conf.all.src_valid_mark=1" \
-                      --restart unless-stopped \
                       linuxserver/wireguard
                 """
             }
