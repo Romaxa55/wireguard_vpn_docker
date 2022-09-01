@@ -15,7 +15,8 @@ node ("slave") {
     stage('test') {
       try {
         timeout(1000, unit: SECONDS) {
-          sh "docker wait wireguard"
+          sh "chmod +x ./scripts/check.sh"
+          sh "./scripts/check.sh"
         }
       } catch(e) {
         sh "docker stop wireguard"
