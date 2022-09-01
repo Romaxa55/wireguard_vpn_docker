@@ -141,11 +141,11 @@ pipeline {
       }
 
       success {
-          bitbucketStatusNotify buildState: "SUCCESSFUL"
+            echo 'I succeeded!'
       }
 
       failure {
-          bitbucketStatusNotify buildState: "FAILED"
+            echo 'I failed :('
       }
     }
 }
