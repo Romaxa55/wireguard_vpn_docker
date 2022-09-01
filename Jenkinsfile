@@ -25,7 +25,7 @@ pipeline {
                         -v /var/run/docker.sock:/var/run/docker.sock:ro \
                         -e TIMEOUT=30 \
                         -e COMPOSE_PROJECT_NAME=\$(basename \"'${env.WORKSPACE}'\") \
-                        softonic/compose-project-is-up
+                        linuxserver/wireguard
                 """
             }
         }
