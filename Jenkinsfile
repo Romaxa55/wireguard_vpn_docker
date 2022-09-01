@@ -21,7 +21,7 @@ pipeline {
                 sh "docker-compose up -d"
                 sh """
                     docker run --rm \
-                      --name=wireguard \
+                      --name=wireguard-test \
                       --cap-add=NET_ADMIN \
                       --cap-add=SYS_MODULE \
                       -e PUID=1000 \
