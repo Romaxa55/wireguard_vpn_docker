@@ -25,7 +25,7 @@ pipeline {
         stage("Run tests") {
             steps {
                 sh "docker ps"
-                sh "docker logs"
+                sh "docker logs wireguard"
             }
 
         }
