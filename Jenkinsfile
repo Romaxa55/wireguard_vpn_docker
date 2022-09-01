@@ -19,10 +19,8 @@ node ("slave") {
           sh "./scripts/check.sh"
         }
       } catch(e) {
-        sh "docker stop wireguard"
-        sh "docker wait wireguard" // <= 10s, container is guaranteed to be stopped
+        print(e)
       }
-      sh "docker rm wireguard"
     }
   } finally {
     stage('cleanup') {
