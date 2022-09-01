@@ -30,19 +30,6 @@ pipeline {
 
         }
 
-
-
-            post {
-                success {
-                         echo 'I succeeded!'
-
-                }
-
-                failure {
-                         echo 'I failed :('
-                }
-            }
-        }
     }
 
     post {
