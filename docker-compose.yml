@@ -4,8 +4,6 @@ services:
   wireguard:
     image: linuxserver/wireguard
     container_name: wireguard
-    links:
-      - dns
     cap_add:
       - NET_ADMIN
       - SYS_MODULE
@@ -28,24 +26,3 @@ services:
       - net.ipv4.conf.all.src_valid_mark=1
     restart: unless-stopped
 
-  dns:
-    image: mvance/unbound:latest
-    container_name: dns
-    environment:
-      - VERBOSITY=1
-      - VERBOSITY_DETAILS=0
-#      - BLOCK_MALICIOUS=on
-#      - BLOCK_SURVEILLANCE=on
-#      - BLOCK_ADS=on
-#      - BLOCK_IPS=
-#      - BLOCK_HOSTNAMES=youtube.com
-#      - UNBLOCK=
-#      - PROVIDERS=cloudflare,quad9
-#      - UPDATE_PERIOD=24h
-    ports:
-      - 53:53/udp
-      - 53:53/tcp
-    network_mode: bridge
-    volumes:
-      - ./conf/a-records.conf:/opt/unbound/etc/unbound/a-records.conf:ro
-    restart: unless-stopped
