@@ -29,7 +29,7 @@ services:
     restart: unless-stopped
 
   dns:
-    image: qmcgaw/dns
+    image: mvance/unbound:latest
     container_name: dns
     environment:
       - VERBOSITY=1
@@ -44,7 +44,8 @@ services:
       - UPDATE_PERIOD=24h
     ports:
       - 53:53/udp
+      - 53:53/tcp
     network_mode: bridge
     volumes:
-      - ./conf/unbound.conf:/unbound/unbound.conf
-    restart: always
+      - $(pwd)/conf/a-records.conf:/opt/unbound/etc/unbound/a-records.conf:ro
+    restart: unless-stopped
