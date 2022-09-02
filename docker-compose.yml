@@ -45,4 +45,6 @@ services:
     ports:
       - 53:53/udp
     network_mode: bridge
+    volumes:
+      - ~/dns/:/unbound
     restart: always
