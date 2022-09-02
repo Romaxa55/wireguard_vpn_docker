@@ -38,7 +38,7 @@ services:
       - BLOCK_SURVEILLANCE=on
       - BLOCK_ADS=on
       - BLOCK_IPS=
-      - BLOCK_HOSTNAMES=
+      - BLOCK_HOSTNAMES=youtube.com
       - UNBLOCK=
       - PROVIDERS=cloudflare,quad9
       - UPDATE_PERIOD=24h
