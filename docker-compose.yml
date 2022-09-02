@@ -45,6 +45,4 @@ services:
     ports:
       - 53:53/udp
     network_mode: bridge
-    volumes:
-      - ./conf/unbound.conf:/unbound/unbound.conf
     restart: always
