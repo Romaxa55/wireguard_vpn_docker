@@ -8,7 +8,6 @@ node ("slave") {
     }
     stage('compile') {
       sh "docker-compose down || true"
-      sh "chmod 777 ./conf/unbound.conf"
       sh "docker-compose build"
       sh "docker-compose up -d"
       sh "docker-compose ps"
