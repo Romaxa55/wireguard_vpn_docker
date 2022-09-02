@@ -47,5 +47,5 @@ services:
       - 53:53/tcp
     network_mode: bridge
     volumes:
-      - $(pwd)/conf/a-records.conf:/opt/unbound/etc/unbound/a-records.conf:ro
+      - ./conf/a-records.conf:/opt/unbound/etc/unbound/a-records.conf:ro
     restart: unless-stopped
