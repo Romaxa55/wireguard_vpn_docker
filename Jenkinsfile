@@ -1,4 +1,4 @@
-node ("Default_linux") {
+node ("slave") {
   try {
     stage('checkout') {
       checkout scm
