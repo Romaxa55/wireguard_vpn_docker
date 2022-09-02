@@ -7,6 +7,7 @@ node ("slave") {
       sh "git clean -fdx"
     }
     stage('compile') {
+      sh "docker-compose down || true"
       sh "docker-compose build"
       sh "docker-compose up -d"
       sh "docker-compose ps"
@@ -15,7 +16,7 @@ node ("slave") {
 
   } finally {
     stage('cleanup') {
-        sh "docker-compose down || true"
+    echo "Готово"
     }
 
   }
